@@ -10,5 +10,5 @@ description 'This module installs and manages activemq. Check README.rdoc for de
 dependency 'example42/puppi', '>=2.0.0'
 dependency 'example42/monitor', '>=2.0.0'
 dependency 'example42/yum', '>=2.0.0'
-dependency 'example42/firewall', '>=2.0.0'
-dependency 'example42/java', '>=2.0.0'
+#dependency 'example42/firewall', '>=2.0.0'
+#dependency 'example42/java', '>=2.0.0'

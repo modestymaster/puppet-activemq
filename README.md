@@ -115,14 +115,5 @@ For RedHat derivatives it requires Example42's yum module (or at least yum/manif
           monitor_tool => [ 'nagios' , 'monit' , 'munin' ],
         }
 
-* Activate automatic firewalling. This option requires the usage of Example42 firewall and relevant firewall tools modules
-
-        class { 'activemq':       
-          firewall      => true,
-          firewall_tool => 'iptables',
-          firewall_src  => '10.42.0.0/24',
-          firewall_dst  => $ipaddress_eth0,
-        }
-
 
 [![Build Status](https://travis-ci.org/example42/puppet-activemq.png?branch=master)](https://travis-ci.org/example42/puppet-activemq)
