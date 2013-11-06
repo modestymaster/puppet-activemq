@@ -367,6 +367,9 @@ class activemq (
     hasstatus  => $activemq::service_status,
     pattern    => $activemq::process,
     provider   => 'base',
+    start      => '/etc/init.d/activemq start',
+    stop       => '/etc/init.d/activemq stop',
+    status     => '/etc/init.d/activemq status',
     require    => Class['activemq::install'],
   }
 
