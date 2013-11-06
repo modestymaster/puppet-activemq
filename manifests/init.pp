@@ -399,6 +399,7 @@ class activemq (
     enable     => $activemq::manage_service_enable,
     hasstatus  => $activemq::service_status,
     pattern    => $activemq::process,
+    provider   => 'init',
     require    => Class['activemq::install'],
   }
 

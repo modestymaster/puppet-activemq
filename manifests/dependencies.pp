@@ -26,7 +26,7 @@ class activemq::dependencies {
 
   case $activemq::install {
     'source','puppi': {
-      require java
+      require jdk_oracle
     }
     default: {}
   }
