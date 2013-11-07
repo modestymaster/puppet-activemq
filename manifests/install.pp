@@ -53,7 +53,7 @@ class activemq::install inherits activemq {
         ensure  => 'present',
         path    => "${activemq::install_destination}/conf/activemq-juralaw-master.xml",
         source  => 'puppet:///modules/activemq/jura-activemq/master/conf/activemq-juralaw-master.xml',
-        require => Puppi::Project::Tar['activemq'],
+        require => File['activemq_link'],
       }
 
       file { 'juralaw specific master activemq login config':
