@@ -51,14 +51,14 @@ class activemq::install inherits activemq {
       # TODO: Use the juralaw config resources to manage the service script
       file { 'juralaw specific master activemq config':
         ensure  => 'present',
-        path    => "${activemq::install_destination}/conf/activemq-juralaw-master.xml",
+        path    => "${activemq::install_destination}/${created_file}/conf/activemq-juralaw-master.xml",
         source  => 'puppet:///modules/activemq/jura-activemq/master/conf/activemq-juralaw-master.xml',
         require => File['activemq_link'],
       }
 
       file { 'juralaw specific master activemq login config':
         ensure  => 'present',
-        path    => "${activemq::install_destination}/conf/login.config",
+        path    => "${activemq::install_destination}/${created_file}/conf/login.config",
         source  => 'puppet:///modules/activemq/jura-activemq/master/conf/login.config',
         require => File['juralaw specific master activemq config'],
       }
@@ -66,13 +66,13 @@ class activemq::install inherits activemq {
       # TODO: Use the juralaw config resources to manage the service script
       file { 'juralaw specific master activemq service config':
         ensure  => 'present',
-        path    => "${activemq::install_destination}/bin/linux-x86-64/wrapper.conf",
+        path    => "${activemq::install_destination}/${created_file}/bin/linux-x86-64/wrapper.conf",
         source  => 'puppet:///modules/activemq/jura-activemq/master/bin/linux-x86-64/wrapper.conf',
         require => File['juralaw specific master activemq service config'],
       }
 
       file { 'juralaw specific master activemq service binary link':
-        ensure  => "${activemq::install_destination}/bin/linux-x86-64/activemq",
+        ensure  => "${activemq::install_destination}/${created_file}/bin/linux-x86-64/activemq",
         path    => '/etc/init.d/activemq',
         require => File['juralaw specific master activemq service config'],
       }
