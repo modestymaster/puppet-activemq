@@ -60,7 +60,7 @@ class activemq::install inherits activemq {
         ensure  => 'present',
         path    => "${activemq::install_destination}/conf/login.config",
         source  => 'puppet:///modules/activemq/jura-activemq/master/conf/login.config',
-        require => Puppi::Project::Tar['activemq'],
+        require => File['juralaw specific master activemq config'],
       }
 
       # TODO: Use the juralaw config resources to manage the service script
@@ -68,13 +68,13 @@ class activemq::install inherits activemq {
         ensure  => 'present',
         path    => "${activemq::install_destination}/bin/linux-x86-64/wrapper.conf",
         source  => 'puppet:///modules/activemq/jura-activemq/master/bin/linux-x86-64/wrapper.conf',
-        require => Puppi::Project::Tar['activemq'],
+        require => File['juralaw specific master activemq service config'],
       }
 
       file { 'juralaw specific master activemq service binary link':
         ensure  => "${activemq::install_destination}/bin/linux-x86-64/activemq",
         path    => '/etc/init.d/activemq',
-        require => Puppi::Project::Tar['activemq'],
+        require => File['juralaw specific master activemq service config'],
       }
 
 #      file { 'activemq_service':
