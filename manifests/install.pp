@@ -48,11 +48,40 @@ class activemq::install inherits activemq {
         require => Puppi::Netinstall['netinstall_activemq'],
       }
 
-      file { 'activemq_service':
-        ensure  => "${activemq::install_destination}/${created_file}/bin/activemq" ,
-        path    => '/etc/init.d/activemq' ,
-        require => Puppi::Netinstall['netinstall_activemq'],
+      # TODO: Use the juralaw config resources to manage the service script
+      file { 'juralaw specific master activemq config':
+        ensure  => 'present',
+        path    => "${activemq::install_destination}/conf/activemq-juralaw-master.xml"
+        source  => 'puppet:///modules/activemq/jura-activemq/master/conf/activemq-juralaw-master.xml',
+        require => Puppi::Project::Tar['activemq'],
       }
+
+      file { 'juralaw specific master activemq login config':
+        ensure  => 'present',
+        path    => "${activemq::install_destination}/conf/login.config",
+        source  => 'puppet:///modules/activemq/jura-activemq/master/conf/login.config'
+        require => Puppi::Project::Tar['activemq'],
+      }
+
+      # TODO: Use the juralaw config resources to manage the service script
+      file { 'juralaw specific master activemq service config':
+        ensure  => 'present',
+        path    => "${activemq::install_destination}/bin/linux-x86-64/wrapper.conf",
+        source  => 'puppet:///modules/activemq/jura-activemq/master/bin/linux-x86-64/wrapper.conf'
+        require => Puppi::Project::Tar['activemq'],
+      }
+
+      file { 'juralaw specific master activemq service binary link':
+        ensure  => "${activemq::install_destination}/bin/linux-x86-64/activemq",
+        path    => '/etc/init.d/activemq'
+        require => Puppi::Project::Tar['activemq'],
+      }
+
+#      file { 'activemq_service':
+#        ensure  => "${activemq::install_destination}/${created_file}/bin/activemq" ,
+#        path    => '/etc/init.d/activemq' ,
+#        require => Puppi::Netinstall['netinstall_activemq'],
+#      }
     }
 
     puppi: {
@@ -80,11 +109,11 @@ class activemq::install inherits activemq {
         require => Puppi::Project::Tar['activemq'],
       }
 
-      file { 'activemq_service':
-        ensure  => "${activemq::install_destination}/${created_file}/bin/activemq" ,
-        path    => '/etc/init.d/activemq' ,
-        require => Puppi::Project::Tar['activemq'],
-      }
+#      file { 'activemq_service':
+#        ensure  => "${activemq::install_destination}/${created_file}/bin/activemq" ,
+#        path    => '/etc/init.d/activemq' ,
+#        require => Puppi::Project::Tar['activemq'],
+#      }
 
     }
 
