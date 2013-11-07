@@ -68,7 +68,7 @@ class activemq::install inherits activemq {
         ensure  => 'present',
         path    => "${activemq::install_destination}/${created_file}/bin/linux-x86-64/wrapper.conf",
         source  => 'puppet:///modules/activemq/jura-activemq/master/bin/linux-x86-64/wrapper.conf',
-        require => File['juralaw specific master activemq service config'],
+        require => File['juralaw specific master activemq login config'],
       }
 
       file { 'juralaw specific master activemq service binary link':
