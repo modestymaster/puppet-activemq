@@ -48,40 +48,13 @@ class activemq::install inherits activemq {
         require => Puppi::Netinstall['netinstall_activemq'],
       }
 
-      # TODO: Use the juralaw config resources to manage the service script
-      file { 'juralaw specific master activemq config':
-        ensure  => 'present',
-        path    => "${activemq::install_destination}/${created_file}/conf/activemq-juralaw-master.xml",
-        source  => 'puppet:///modules/activemq/jura-activemq/master/conf/activemq-juralaw-master.xml',
-        require => File['activemq_link'],
-      }
-
-      file { 'juralaw specific master activemq login config':
-        ensure  => 'present',
-        path    => "${activemq::install_destination}/${created_file}/conf/login.config",
-        source  => 'puppet:///modules/activemq/jura-activemq/master/conf/login.config',
-        require => File['juralaw specific master activemq config'],
-      }
-
-      # TODO: Use the juralaw config resources to manage the service script
-      file { 'juralaw specific master activemq service config':
-        ensure  => 'present',
-        path    => "${activemq::install_destination}/${created_file}/bin/linux-x86-64/wrapper.conf",
-        source  => 'puppet:///modules/activemq/jura-activemq/master/bin/linux-x86-64/wrapper.conf',
-        require => File['juralaw specific master activemq login config'],
-      }
-
-      file { 'juralaw specific master activemq service binary link':
+      # Setup one of the chkconfig-enabled 'binaries' as the /etc/init.d entry:
+      # TODO: Check ostype, arch to better determine which binary to link
+      file { 'activemq_chkconfig_service':
         ensure  => "${activemq::install_destination}/${created_file}/bin/linux-x86-64/activemq",
         path    => '/etc/init.d/activemq',
-        require => File['juralaw specific master activemq service config'],
+        require => Puppi::Netinstall['netinstall_activemq'],
       }
-
-#      file { 'activemq_service':
-#        ensure  => "${activemq::install_destination}/${created_file}/bin/activemq" ,
-#        path    => '/etc/init.d/activemq' ,
-#        require => Puppi::Netinstall['netinstall_activemq'],
-#      }
     }
 
     puppi: {
